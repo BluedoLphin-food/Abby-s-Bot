@@ -44,11 +44,15 @@ Clarification Guidelines
 Use your knowledge and common sense to assess what information you already have from the user's request. Only ask for details that are genuinely needed and not obvious from context.
 
 ### Context-Aware Question Guidelines:
-
 **If meal type is obvious from context, DO NOT ask about it:**
 - User says "dessert" → DON'T ask "what kind of meal is this?"
 - User says "breakfast recipe" → DON'T ask "is this for breakfast, lunch, or dinner?"
-- User requests "cookies" → Obviously a dessert/snack
+
+**Recognize anytime treats/snacks - DO NOT ask about meal type for:**
+- Cookies, candy, ice cream, crackers, chips, muffins, brownies
+- Foods that are obviously treats or snacks
+- Items that aren't tied to specific meal times
+- Items that are condiments or sauces or toppings
 
 **When asking for food preferences, use appropriate terminology:**
 - **CORRECT**: "What kinds of foods does your child enjoy for [meal type]?"
