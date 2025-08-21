@@ -201,24 +201,47 @@
       let typingInterval = null;
 
       // Auto-resize textarea function with height constraints
+      // Auto-resize textarea function with better handling
       function autoResize() {
-        input.style.height = 'auto';
-        const newHeight = Math.min(input.scrollHeight, 150); // Max 150px height
-        input.style.height = newHeight + 'px';
-      }
+      // Reset height to get accurate scrollHeight
+      input.style.height = 'auto';
+  
+  // Calculate the new height based on content
+  const scrollHeight = input.scrollHeight;
+  const minHeight = 50;
+  const maxHeight = 200;
+  
+  // Set the new height within our limits
+  const newHeight = Math.max(minHeight, Math.min(scrollHeight, maxHeight));
+  input.style.height = newHeight + 'px';
+}
 
-      // Add event listener for auto-resize
-      input.addEventListener('input', autoResize);
+// Add event listeners with proper timing
+input.addEventListener('input', function() {
+  autoResize();
+});
 
-      // Handle Enter key press
-      input.addEventListener('keydown', function(event) {
-        // Send message on Enter, but allow Shift+Enter for new lines
-        if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault(); // Prevent default Enter behavior
-          sendMessage(event);
-        }
-      });
+input.addEventListener('paste', function() {
+  // Delay to allow paste content to be processed
+  setTimeout(autoResize, 0);
+});
 
+// Handle Enter key press
+input.addEventListener('keydown', function(event) {
+  // Send message on Enter, but allow Shift+Enter for new lines
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage(event);
+  } else if (event.key === 'Enter' && event.shiftKey) {
+    // For Shift+Enter, resize after the newline is added
+    setTimeout(autoResize, 0);
+  }
+});
+
+// Also trigger resize when the textarea gains focus
+input.addEventListener('focus', function() {
+  setTimeout(autoResize, 0);
+});
       /**
        * Clears and re-renders all messages in the chat container based on chatHistory.
        */
